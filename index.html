@@ -20,12 +20,10 @@
             overflow-x: hidden;
         }
 
-        /* ======== NHẠC (ẩn player) ======== */
         audio {
-            display: none
+            display: none;
         }
 
-        /* ======== TUYẾT & CÂY THÔNG RƠI ======== */
         .snowflake,
         .treeflake {
             position: fixed;
@@ -37,7 +35,7 @@
         }
 
         .snowflake {
-            font-size: 14px
+            font-size: 14px;
         }
 
         .treeflake {
@@ -61,7 +59,6 @@
             }
         }
 
-        /* ======== INTRO WRAPPER (thiệp) ======== */
         #intro-wrapper {
             position: fixed;
             inset: 0;
@@ -73,7 +70,6 @@
             transition: opacity 1s ease;
         }
 
-        /* Glow ngoài thiệp */
         #intro-wrapper::before {
             content: "";
             position: absolute;
@@ -97,7 +93,6 @@
             }
         }
 
-        /* Scene 3D thiệp */
         .card-scene {
             width: 340px;
             height: 230px;
@@ -106,7 +101,6 @@
             z-index: 20;
         }
 
-        /* Cả thiệp (xoay nguyên khối) */
         .card {
             width: 100%;
             height: 100%;
@@ -115,7 +109,6 @@
             transition: transform 1.2s ease-in-out;
         }
 
-        /* Hai mặt thiệp */
         .card-front,
         .card-back {
             position: absolute;
@@ -125,8 +118,6 @@
             box-shadow: 0 15px 45px rgba(0, 0, 0, .45);
         }
 
-
-        /* Mặt trước */
         .card-front {
             background: linear-gradient(135deg, #fb7185, #facc15);
             display: flex;
@@ -140,7 +131,6 @@
             text-align: center;
         }
 
-        /* Mặt sau */
         .card-back {
             background: #020617;
             padding: 22px;
@@ -148,11 +138,9 @@
             transform: rotateY(180deg);
         }
 
-        /* ===== Glow Border Pulse cho Thiệp ===== */
         .card-glow {
             position: absolute;
             inset: -4px;
-            /* viền rộng ra một chút */
             border-radius: 14px;
             z-index: -1;
             background: radial-gradient(circle,
@@ -180,14 +168,12 @@
             }
         }
 
-        /* Khi mở thiệp (xoay cả card) */
         .card.opened {
             transform: rotateY(180deg);
         }
 
-        /* Nút mở thiệp & vào trang chính */
         #open-btn,
-        #enter-btn {
+        .select-btn {
             margin-top: 14px;
             padding: 9px 22px;
             border: none;
@@ -198,16 +184,16 @@
             color: #0f172a;
         }
 
-        #enter-btn {
+        .select-btn {
+            width: 100%;
             background: linear-gradient(90deg, #22c55e, #facc15, #fb7185);
         }
 
         #open-btn:hover,
-        #enter-btn:hover {
+        .select-btn:hover {
             transform: scale(1.08);
         }
 
-        /* ======== HEADER TRANG CHÍNH ======== */
         header {
             padding: 20px 20px;
             text-align: center;
@@ -262,7 +248,6 @@
             line-height: 1.6;
         }
 
-        /* 2 card em gái trong màn chính */
         .girls {
             display: grid;
             gap: 40px
@@ -304,6 +289,11 @@
             opacity: .7;
         }
 
+        /* Đây là phần DUY NHẤT thêm mới */
+        .hidden {
+            display: none !important;
+        }
+
         /* Hiệu ứng Snow Burst */
         .snow-burst {
             position: fixed;
@@ -317,7 +307,6 @@
             filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
             animation: burstAnim 1s ease-out forwards;
         }
-
 
         @keyframes burstAnim {
             0% {
@@ -346,11 +335,10 @@
     <script>
         const music = document.getElementById("bgmusic");
         music.volume = 0.35;
-        // đề phòng browser chặn autoplay
         document.addEventListener("click", () => music.play().catch(() => { }), { once: true });
     </script>
 
-    <!-- ======== HÀM TẠO TUYẾT + CÂY THÔNG ======== -->
+    <!-- ======== TUYẾT + CÂY THÔNG ======== -->
     <script>
         function generateSnow(count) {
             for (let i = 0; i < count; i++) {
@@ -363,6 +351,7 @@
                 document.body.appendChild(s);
             }
         }
+
         function generateTrees(count) {
             for (let i = 0; i < count; i++) {
                 const t = document.createElement("div");
@@ -374,7 +363,7 @@
                 document.body.appendChild(t);
             }
         }
-        // Tuyết nền + cây thông luôn có
+
         generateSnow(60);
         generateTrees(15);
     </script>
@@ -384,6 +373,7 @@
         <div class="card-scene">
             <div class="card" id="card">
                 <div class="card-glow"></div>
+
                 <!-- Mặt trước -->
                 <div class="card-front">
                     Ông Trùm IT hello hai em!
@@ -392,77 +382,13 @@
 
                 <!-- Mặt sau -->
                 <div class="card-back">
-                    <h2>Giáng Sinh An Lành ✨</h2>
-                    <p style="opacity:.9">
-                        Chúc 2 em một mùa Noel thật ấm áp, đầy yêu thương và điều bất ngờ dễ thương.
-                    </p>
-                    <button id="enter-btn">Vào trang chính ➜</button>
+                    <h2>Chọn người xem thiệp 🎄</h2>
+                    <button class="select-btn" id="view-girl1">Xem thiệp: Gơn học code 💖</button>
+                    <button class="select-btn" id="view-girl2">Xem thiệp: Gơn vô tri 💗</button>
                 </div>
             </div>
         </div>
     </div>
-
-    <script>
-        const intro = document.getElementById("intro-wrapper");
-        const card = document.getElementById("card");
-        const openBtn = document.getElementById("open-btn");
-        const enterBtn = document.getElementById("enter-btn");
-
-        /* Bấm "Mở thiệp" → xoay thiệp để lộ mặt sau */
-        openBtn.onclick = () => {
-            card.classList.add("opened");
-        };
-
-        /* Hàm tạo hiệu ứng Snow Burst */
-        function snowBurst(x, y) {
-            const burstCount = 70; // tăng gấp đôi
-            for (let i = 0; i < burstCount; i++) {
-                const p = document.createElement("div");
-                p.className = "snow-burst";
-
-                // Nổ to hơn – radius tăng mạnh
-                const angle = Math.random() * 2 * Math.PI;
-                const distance = 110 + Math.random() * 90; // 110→200px
-
-                const tx = Math.cos(angle) * distance;
-                const ty = Math.sin(angle) * distance;
-
-                p.style.left = x + "px";
-                p.style.top = y + "px";
-
-                p.style.setProperty("--tx", tx + "px");
-                p.style.setProperty("--ty", ty + "px");
-
-                document.body.appendChild(p);
-
-                setTimeout(() => p.remove(), 1100);
-            }
-        }
-
-        /* Bấm "Vào trang chính" */
-        enterBtn.onclick = (e) => {
-
-            // Lấy tọa độ nút → tạo Snow Burst
-            const rect = enterBtn.getBoundingClientRect();
-            const x = rect.left + rect.width / 2;
-            const y = rect.top + rect.height / 2;
-            snowBurst(x, y);
-
-            // Thêm tuyết rơi nhiều hơn
-            generateSnow(40);
-
-            // Hiệu ứng rung thiệp
-            card.style.transition = "transform .3s";
-            card.style.transform = "scale(1.05)";
-            setTimeout(() => { card.style.transform = "scale(1)"; }, 250);
-
-            // sau 1.1s thì ẩn intro
-            setTimeout(() => {
-                intro.style.opacity = "0";
-                setTimeout(() => { intro.style.display = "none"; }, 900);
-            }, 1100);
-        };
-    </script>
 
     <!-- ======== TRANG NOEL CHÍNH ======== -->
     <header>
@@ -472,6 +398,7 @@
 
     <main>
 
+        <!-- Lời chúc giữ nguyên y hệt -->
         <div class="section card-main">
             <h2>🎁 Lời chúc Giáng Sinh</h2>
             <p>
@@ -486,8 +413,7 @@
         </div>
 
         <div class="section girls">
-
-            <div class="girl-box">
+            <div class="girl-box" id="girl1">
                 <img class="girl-img" src="images/girl_hoc_code.jpg" alt="Girl Noel 1">
                 <div class="girl-text">
                     <h3>🎀 Gơn học code</h3>
@@ -498,7 +424,7 @@
                 </div>
             </div>
 
-            <div class="girl-box">
+            <div class="girl-box" id="girl2">
                 <img class="girl-img" src="images/girl_vo_tri.jpg" alt="Girl Noel 2">
                 <div class="girl-text">
                     <h3>🎀 Gơn vô tri</h3>
@@ -508,13 +434,65 @@
                     </p>
                 </div>
             </div>
-
         </div>
 
     </main>
 
     <footer>Made with 'Ông Trùm IT' for you this Christmas 🎄</footer>
 
-</body>
+    <!-- ======== JS CHỌN NGƯỜI ======== -->
+    <script>
+        const intro = document.getElementById("intro-wrapper");
+        const card = document.getElementById("card");
+        const openBtn = document.getElementById("open-btn");
 
+        const girl1 = document.getElementById("girl1");
+        const girl2 = document.getElementById("girl2");
+
+        const viewGirl1 = document.getElementById("view-girl1");
+        const viewGirl2 = document.getElementById("view-girl2");
+
+        openBtn.onclick = () => card.classList.add("opened");
+
+        function snowBurst(x, y) {
+            const burstCount = 70;
+            for (let i = 0; i < burstCount; i++) {
+                const p = document.createElement("div");
+                p.className = "snow-burst";
+
+                const angle = Math.random() * 2 * Math.PI;
+                const distance = 110 + Math.random() * 90;
+
+                p.style.setProperty("--tx", Math.cos(angle) * distance + "px");
+                p.style.setProperty("--ty", Math.sin(angle) * distance + "px");
+
+                p.style.left = x + "px";
+                p.style.top = y + "px";
+
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1100);
+            }
+        }
+
+        function choose(btn, show, hide) {
+            const rect = btn.getBoundingClientRect();
+            snowBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+
+            document.getElementById(show).classList.remove("hidden");
+            document.getElementById(hide).classList.add("hidden");
+
+            setTimeout(() => {
+                intro.style.opacity = "0";
+                setTimeout(() => {
+                    intro.style.display = "none";
+                    document.getElementById(show).scrollIntoView({ behavior: "smooth" });
+                }, 900);
+            }, 800);
+        }
+
+        viewGirl1.onclick = () => choose(viewGirl1, "girl1", "girl2");
+        viewGirl2.onclick = () => choose(viewGirl2, "girl2", "girl1");
+    </script>
+
+</body>
 </html>
