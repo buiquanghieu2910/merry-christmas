@@ -18,12 +18,14 @@
             background: linear-gradient(#0f172a, #1e293b, #334155);
             color: white;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
         audio {
-            display: none;
+            display: none
         }
 
+        /* ======== TUYẾT RƠI & CÂY THÔNG RƠI TOÀN MÀN HÌNH ======== */
         .snowflake,
         .treeflake {
             position: fixed;
@@ -39,13 +41,13 @@
         }
 
         .treeflake {
-            font-size: 26px;
-            text-shadow: 0 0 12px rgba(255, 255, 255, .7)
+            font-size: 24px;
+            text-shadow: 0 0 12px rgba(255, 255, 255, .7);
         }
 
         @keyframes fall {
             0% {
-                transform: translateY(-10vh) translateX(0);
+                transform: translateY(-10vh);
                 opacity: 0
             }
 
@@ -54,11 +56,12 @@
             }
 
             100% {
-                transform: translateY(110vh) translateX(50px);
+                transform: translateY(110vh) translateX(40px);
                 opacity: 0
             }
         }
 
+        /* ======== INTRO ======== */
         #intro-wrapper {
             position: fixed;
             inset: 0;
@@ -76,15 +79,15 @@
             width: 480px;
             height: 480px;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255, 255, 255, .25), transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, .22), transparent 70%);
             filter: blur(15px);
-            animation: glow 3s infinite alternate ease-in-out;
+            animation: glow 3s infinite alternate;
         }
 
         @keyframes glow {
             0% {
                 transform: scale(.9);
-                opacity: .7
+                opacity: .6
             }
 
             100% {
@@ -94,8 +97,8 @@
         }
 
         .card-scene {
-            width: 340px;
-            height: 230px;
+            width: 360px;
+            height: 480px;
             perspective: 1500px;
             position: relative;
             z-index: 20;
@@ -106,16 +109,16 @@
             height: 100%;
             position: relative;
             transform-style: preserve-3d;
-            transition: transform 1.2s ease-in-out;
+            transition: transform 1.1s ease;
         }
 
         .card-front,
         .card-back {
             position: absolute;
             inset: 0;
-            border-radius: 12px;
+            border-radius: 18px;
             backface-visibility: hidden;
-            box-shadow: 0 15px 45px rgba(0, 0, 0, .45);
+            overflow: hidden;
         }
 
         .card-front {
@@ -124,64 +127,57 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            color: #0f172a;
             font-size: 2rem;
             font-weight: 700;
-            color: #0f172a;
             padding: 22px;
             text-align: center;
         }
 
         .card-back {
-            background: #020617;
-            padding: 22px;
-            text-align: center;
+            background: radial-gradient(circle, #020617, #0f1624 55%, #111827);
             transform: rotateY(180deg);
-        }
-
-        .card-glow {
-            position: absolute;
-            inset: -4px;
-            border-radius: 14px;
-            z-index: -1;
-            background: radial-gradient(circle,
-                    rgba(255, 255, 200, 0.8),
-                    rgba(255, 200, 120, 0.45),
-                    rgba(0, 0, 0, 0));
-            animation: glowPulse 2.4s ease-in-out infinite;
-            filter: blur(8px);
-        }
-
-        @keyframes glowPulse {
-            0% {
-                opacity: 0.55;
-                transform: scale(0.96);
-            }
-
-            50% {
-                opacity: 1;
-                transform: scale(1.05);
-            }
-
-            100% {
-                opacity: 0.55;
-                transform: scale(0.96);
-            }
+            padding: 30px;
+            position: relative;
         }
 
         .card.opened {
             transform: rotateY(180deg);
         }
 
+        /* ===== TEXT ===== */
+        .card-back h2 {
+            text-align: center;
+            font-size: 1.45rem;
+            margin-bottom: 14px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, .4);
+            position: relative;
+            z-index: 10;
+        }
+
+        .blessing-text {
+            text-align: justify;
+            opacity: .95;
+            line-height: 1.55;
+            font-size: .96rem;
+            margin-bottom: 22px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ===== BUTTON ===== */
         #open-btn,
         .select-btn {
             margin-top: 14px;
-            padding: 9px 22px;
+            padding: 10px 22px;
             border: none;
             border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
             background: linear-gradient(90deg, #fb7185, #facc15, #22c55e);
             color: #0f172a;
+            position: relative;
+            z-index: 10;
         }
 
         .select-btn {
@@ -194,20 +190,82 @@
             transform: scale(1.08);
         }
 
+        /* ===== TUYẾT NHỎ TRONG CARD ===== */
+        .inner-snow {
+            position: absolute;
+            top: -10px;
+            font-size: 12px;
+            opacity: .85;
+            animation: innerFall linear infinite;
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        @keyframes innerFall {
+            0% {
+                transform: translateY(-10%);
+                opacity: 0
+            }
+
+            10% {
+                opacity: 1
+            }
+
+            100% {
+                transform: translateY(130%);
+                opacity: 0
+            }
+        }
+
+        /* FULL SCREEN SNOW BEHIND CARD-BACK */
+        #card-back-snow-layer {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .bgflake {
+            position: absolute;
+            top: -20px;
+            font-size: 14px;
+            opacity: .7;
+            animation: cardbackBG linear infinite;
+            color: white;
+        }
+
+        @keyframes cardbackBG {
+            0% {
+                transform: translateY(-10%);
+                opacity: 0
+            }
+
+            10% {
+                opacity: 1
+            }
+
+            100% {
+                transform: translateY(130%);
+                opacity: 0
+            }
+        }
+
+        /* ===== MAIN PAGE ===== */
         header {
-            padding: 20px 20px;
+            padding: 20px;
             text-align: center;
         }
 
         header h1 {
             font-size: 2.8rem;
             text-transform: uppercase;
-            letter-spacing: .15em;
+            letter-spacing: .1em;
             background: linear-gradient(90deg, #ff4b91, #facc15, #22c55e, #38bdf8, #fb7185);
             background-size: 400% 400%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            animation: titleGlow 6s infinite ease-in-out;
+            animation: titleGlow 6s infinite ease;
         }
 
         @keyframes titleGlow {
@@ -224,38 +282,27 @@
             }
         }
 
-        header p {
-            margin-top: 12px;
-            opacity: .9
-        }
-
         main {
             padding: 20px;
             max-width: 1000px;
-            margin: auto
-        }
-
-        .section {
-            margin: 60px 0
-        }
-
-        .card-main {
-            background: rgba(255, 255, 255, .08);
-            padding: 20px;
-            border-radius: 18px;
-            border: 1px solid rgba(255, 255, 255, .1);
-            backdrop-filter: blur(10px);
-            line-height: 1.6;
+            margin: auto;
         }
 
         .girls {
             display: grid;
-            gap: 40px
+            gap: 40px;
+            justify-content: center;
+        }
+
+        .girls.single {
+            grid-template-columns: 1fr;
+            max-width: 450px;
+            margin: auto;
         }
 
         @media(min-width:768px) {
             .girls {
-                grid-template-columns: 1fr 1fr
+                grid-template-columns: 1fr 1fr;
             }
         }
 
@@ -263,64 +310,62 @@
             background: rgba(255, 255, 255, .07);
             border-radius: 18px;
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, .1);
+            border: 1px solid rgba(255, 255, 255, .12);
         }
 
         .girl-img {
             width: 100%;
             height: 420px;
             object-fit: cover;
-            filter: brightness(.9);
             transition: .4s;
+            filter: brightness(.9);
         }
 
         .girl-img:hover {
             transform: scale(1.02);
-            filter: brightness(1.03);
+            filter: brightness(1.04);
         }
 
         .girl-text {
-            padding: 16px
+            padding: 16px;
+        }
+
+        .hidden {
+            display: none !important;
         }
 
         footer {
             text-align: center;
             padding: 40px 0;
-            opacity: .7;
+            opacity: .75;
         }
 
-        /* Đây là phần DUY NHẤT thêm mới */
-        .hidden {
-            display: none !important;
-        }
-
-        /* Hiệu ứng Snow Burst */
+        /* SNOW BURST */
         .snow-burst {
             position: fixed;
             width: 14px;
             height: 14px;
             background: white;
             border-radius: 50%;
-            pointer-events: none;
             opacity: 0;
-            z-index: 3000;
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.8));
-            animation: burstAnim 1s ease-out forwards;
+            z-index: 4000;
+            pointer-events: none;
+            animation: burst 1s ease forwards;
         }
 
-        @keyframes burstAnim {
+        @keyframes burst {
             0% {
-                transform: translate(0, 0) scale(1);
                 opacity: 1;
+                transform: scale(1)
             }
 
-            70% {
-                opacity: 1;
+            80% {
+                opacity: 1
             }
 
             100% {
-                transform: translate(var(--tx), var(--ty)) scale(0.2);
                 opacity: 0;
+                transform: translate(var(--tx), var(--ty)) scale(.2)
             }
         }
     </style>
@@ -328,152 +373,176 @@
 
 <body>
 
-    <!-- ======== NHẠC NOEL ======== -->
+    <!-- MUSIC -->
     <audio id="bgmusic" autoplay loop>
-        <source src="audio/nhac-nen-noel-giang-sinh-amp-christmas-179629.mp3" type="audio/mpeg">
+        <source src="audio/nhac-nen-noel.mp3">
     </audio>
     <script>
-        const music = document.getElementById("bgmusic");
-        music.volume = 0.35;
-        document.addEventListener("click", () => music.play().catch(() => { }), { once: true });
+        document.addEventListener("click", () => bgmusic.play(), {
+            once: true
+        });
     </script>
 
-    <!-- ======== TUYẾT + CÂY THÔNG ======== -->
+    <!-- TUYẾT + CÂY THÔNG -->
     <script>
-        function generateSnow(count) {
-            for (let i = 0; i < count; i++) {
+        function generateSnow(n) {
+            for (let i = 0; i < n; i++) {
                 const s = document.createElement("div");
                 s.className = "snowflake";
                 s.textContent = ["❄", "✦", "❅", "✧"][Math.floor(Math.random() * 4)];
                 s.style.left = Math.random() * 100 + "vw";
-                s.style.animationDuration = (7 + Math.random() * 8) + "s";
+                s.style.animationDuration = (7 + Math.random() * 7) + "s";
                 s.style.animationDelay = Math.random() * 5 + "s";
                 document.body.appendChild(s);
             }
         }
 
-        function generateTrees(count) {
-            for (let i = 0; i < count; i++) {
+        function generateTrees(n) {
+            for (let i = 0; i < n; i++) {
                 const t = document.createElement("div");
                 t.className = "treeflake";
                 t.textContent = "🎄";
                 t.style.left = Math.random() * 100 + "vw";
-                t.style.animationDuration = (10 + Math.random() * 10) + "s";
-                t.style.animationDelay = Math.random() * 8 + "s";
+                t.style.animationDuration = (9 + Math.random() * 7) + "s";
+                t.style.animationDelay = Math.random() * 5 + "s";
                 document.body.appendChild(t);
             }
         }
-
         generateSnow(60);
         generateTrees(15);
     </script>
 
-    <!-- ======== INTRO – THIỆP MỞ ======== -->
+    <!-- INTRO -->
     <div id="intro-wrapper">
         <div class="card-scene">
             <div class="card" id="card">
-                <div class="card-glow"></div>
 
-                <!-- Mặt trước -->
                 <div class="card-front">
                     Ông Trùm IT hello hai em!
                     <button id="open-btn">Mở thiệp</button>
                 </div>
 
-                <!-- Mặt sau -->
-                <div class="card-back">
-                    <h2>Chọn người xem thiệp 🎄</h2>
+                <div class="card-back" id="card-back">
+
+                    <!-- LỚP TUYẾT BG TOÀN CARD -->
+                    <div id="card-back-snow-layer"></div>
+
+                    <h2>Giáng Sinh An Lành ✨</h2>
+
+                    <div class="blessing-text">
+                        <p>Noel đến rồi, anh chúc hai em có một mùa Giáng Sinh thật bình yên và ngập tràn niềm vui.
+                            Cảm ơn hai em đã luôn đáng yêu và là nguồn năng lượng tích cực của anh.</p>
+
+                        <p style="margin-top:10px">
+                            Chúc hai em luôn xinh đẹp, mạnh khỏe, công việc thuận lợi —
+                            và giữ nụ cười rực rỡ như ánh đèn Noel ✨
+                            Mong rằng mùa lễ này hai em sẽ nhận được thật nhiều yêu thương ❤️
+                        </p>
+                    </div>
+
                     <button class="select-btn" id="view-girl1">Xem thiệp: Gơn học code 💖</button>
                     <button class="select-btn" id="view-girl2">Xem thiệp: Gơn vô tri 💜</button>
+
                 </div>
+
             </div>
         </div>
     </div>
 
-    <!-- ======== TRANG NOEL CHÍNH ======== -->
+
+    <!-- MAIN PAGE -->
     <header>
         <h1>Merry Christmas 🎄</h1>
-        <p>Gửi lời chúc thật ấm áp đến hai người em đáng quý của anh ❤️</p>
+        <!--<p>Gửi lời chúc thật ấm áp đến hai người em đáng quý của anh ❤️</p>-->
     </header>
 
     <main>
+        <div class="girls" id="girls">
 
-        <!-- Lời chúc giữ nguyên y hệt -->
-        <div class="section card-main">
-            <h2>🎁 Lời chúc Giáng Sinh</h2>
-            <p>
-                Noel đến rồi, anh chúc hai em có một mùa Giáng Sinh thật bình yên và ngập tràn niềm vui.
-                Cảm ơn hai em đã luôn đáng yêu và là nguồn năng lượng tích cực của anh.
-            </p>
-            <p style="margin-top:10px">
-                Chúc hai em luôn xinh đẹp, mạnh khỏe, công việc thuận lợi —
-                và giữ nụ cười rực rỡ như ánh đèn Noel ✨
-                Mong rằng mùa lễ này hai em sẽ nhận được thật nhiều yêu thương ❤️
-            </p>
-        </div>
-
-        <div class="section girls">
             <div class="girl-box" id="girl1">
-                <img class="girl-img" src="images/girl_hoc_code.jpg" alt="Girl Noel 1">
+                <img class="girl-img" src="images/girl_hoc_code.jpg">
                 <div class="girl-text">
                     <h3>🎀 Gơn học code</h3>
-                    <p>
-                        Chúc em một mùa Noel thật ấm áp và nhẹ nhàng.
-                        Mong mọi điều tốt đẹp nhất sẽ đến với em. 💖
-                    </p>
+                    <p>Chúc em một mùa Noel thật ấm áp và nhẹ nhàng.
+                        Mong mọi điều tốt đẹp nhất sẽ đến với em. 💖</p>
                 </div>
             </div>
 
             <div class="girl-box" id="girl2">
-                <img class="girl-img" src="images/girl_vo_tri.jpg" alt="Girl Noel 2">
+                <img class="girl-img" src="images/girl_vo_tri.jpg">
                 <div class="girl-text">
                     <h3>🎀 Gơn vô tri</h3>
-                    <p>
-                        Chúc em một Giáng Sinh lung linh, thật nhiều niềm vui và may mắn. ✨
-                        Hãy luôn giữ nụ cười thật xinh nhé. 💜
-                    </p>
+                    <p>Chúc em một Giáng Sinh lung linh, thật nhiều niềm vui và may mắn. ✨
+                        Hãy luôn giữ nụ cười thật xinh nhé. 💜</p>
                 </div>
             </div>
-        </div>
 
+        </div>
     </main>
 
     <footer>Made with 'Ông Trùm IT' for you this Christmas 🎄</footer>
 
-    <!-- ======== JS CHỌN NGƯỜI ======== -->
+
+    <!-- LOGIC -->
     <script>
         const intro = document.getElementById("intro-wrapper");
         const card = document.getElementById("card");
         const openBtn = document.getElementById("open-btn");
-
-        const girl1 = document.getElementById("girl1");
-        const girl2 = document.getElementById("girl2");
+        const cardBack = document.getElementById("card-back");
 
         const viewGirl1 = document.getElementById("view-girl1");
         const viewGirl2 = document.getElementById("view-girl2");
 
         openBtn.onclick = () => card.classList.add("opened");
 
-        function snowBurst(x, y) {
-            const burstCount = 70;
-            for (let i = 0; i < burstCount; i++) {
-                const p = document.createElement("div");
-                p.className = "snow-burst";
+        /* TUYẾT NỀN CARD-BACK FULL */
+        function generateCardBackSnow() {
+            const layer = document.getElementById("card-back-snow-layer");
 
-                const angle = Math.random() * 2 * Math.PI;
-                const distance = 110 + Math.random() * 90;
-
-                p.style.setProperty("--tx", Math.cos(angle) * distance + "px");
-                p.style.setProperty("--ty", Math.sin(angle) * distance + "px");
-
-                p.style.left = x + "px";
-                p.style.top = y + "px";
-
-                document.body.appendChild(p);
-                setTimeout(() => p.remove(), 1100);
+            for (let i = 0; i < 40; i++) {
+                const f = document.createElement("div");
+                f.className = "bgflake";
+                f.textContent = ["❄", "✧", "✦", "❅"][Math.floor(Math.random() * 4)];
+                f.style.left = Math.random() * 100 + "%";
+                f.style.animationDuration = (5 + Math.random() * 5) + "s";
+                f.style.animationDelay = Math.random() * 3 + "s";
+                layer.appendChild(f);
             }
         }
 
+        generateCardBackSnow();
+
+        /* TUYẾT NHỎ ĐÈ LÊN TEXT */
+        function innerSnow(container, count) {
+            for (let i = 0; i < count; i++) {
+                const fl = document.createElement("div");
+                fl.className = "inner-snow";
+                fl.textContent = ["❄", "✦", "❅"][Math.floor(Math.random() * 3)];
+                fl.style.left = Math.random() * 100 + "%";
+                fl.style.animationDuration = (5 + Math.random() * 4) + "s";
+                fl.style.animationDelay = Math.random() * 4 + "s";
+                container.appendChild(fl);
+            }
+        }
+        innerSnow(cardBack, 25);
+
+        /* SNOW BURST */
+        function snowBurst(x, y) {
+            for (let i = 0; i < 50; i++) {
+                const p = document.createElement("div");
+                p.className = "snow-burst";
+                const ang = Math.random() * 2 * Math.PI;
+                const d = 100 + Math.random() * 120;
+                p.style.setProperty("--tx", Math.cos(ang) * d + "px");
+                p.style.setProperty("--ty", Math.sin(ang) * d + "px");
+                p.style.left = x + "px";
+                p.style.top = y + "px";
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 1000);
+            }
+        }
+
+        /* CHỌN NGƯỜI */
         function choose(btn, show, hide) {
             const rect = btn.getBoundingClientRect();
             snowBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
@@ -481,13 +550,12 @@
             document.getElementById(show).classList.remove("hidden");
             document.getElementById(hide).classList.add("hidden");
 
+            document.getElementById("girls").classList.add("single");
+
             setTimeout(() => {
                 intro.style.opacity = "0";
-                setTimeout(() => {
-                    intro.style.display = "none";
-                    document.getElementById(show).scrollIntoView({ behavior: "smooth" });
-                }, 900);
-            }, 800);
+                setTimeout(() => intro.style.display = "none", 900);
+            }, 600)
         }
 
         viewGirl1.onclick = () => choose(viewGirl1, "girl1", "girl2");
@@ -495,4 +563,5 @@
     </script>
 
 </body>
+
 </html>
