@@ -7,412 +7,236 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin:0; padding:0; box-sizing:border-box; }
 
         body {
-            font-family: "Segoe UI", sans-serif;
-            background: linear-gradient(#0f172a, #1e293b, #334155);
-            color: white;
-            overflow-x: hidden;
-            min-height: 100vh;
+            font-family:"Segoe UI", sans-serif;
+            background:linear-gradient(#0f172a,#1e293b,#334155);
+            color:white;
+            overflow-x:hidden;
+            min-height:100vh;
         }
 
-        audio {
-            display: none;
-        }
+        audio { display:none; }
 
-        /* ===== GLOBAL SNOW + TREES ===== */
-        .snowflake,
-        .treeflake {
-            position: fixed;
-            top: -10px;
+        /* 🌟 🌟 GIẤU TRANG CHÍNH LÚC BAN ĐẦU — KHÔNG ẢNH HƯỞNG STYLE CŨ 🌟 🌟 */
+        #main-wrapper {
+            opacity: 0;
             pointer-events: none;
-            animation: fall linear infinite;
-            opacity: .85;
-            z-index: 10;
+            transition: opacity 1s ease;
+        }
+        #main-wrapper.show {
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        .snowflake {
-            font-size: 14px;
+        /* ===== SNOW + TREES ===== */
+        .snowflake,.treeflake {
+            position:fixed;
+            top:-10px;
+            pointer-events:none;
+            animation:fall linear infinite;
+            opacity:.85;
+            z-index:10;
         }
-
-        .treeflake {
-            font-size: 24px;
-            text-shadow: 0 0 12px rgba(255, 255, 255, .7);
-        }
+        .snowflake { font-size:14px; }
+        .treeflake { font-size:24px; text-shadow:0 0 12px rgba(255,255,255,.7); }
 
         @keyframes fall {
-            0% {
-                transform: translateY(-10vh);
-                opacity: 0;
-            }
-
-            15% {
-                opacity: 1;
-            }
-
-            100% {
-                transform: translateY(110vh) translateX(40px);
-                opacity: 0;
-            }
+            0%{transform:translateY(-10vh);opacity:0}
+            15%{opacity:1}
+            100%{transform:translateY(110vh) translateX(40px);opacity:0}
         }
 
-        /* ===== INTRO – SANTA ===== */
+        /* ===== INTRO — GIỮ NGUYÊN STYLE ===== */
         #intro-wrapper {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at top, #020617f5, #020617ee);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            z-index: 2000;
-            transition: opacity 1s ease;
+            position:fixed;
+            inset:0;
+            background:radial-gradient(circle at top,#020617f5,#020617ee);
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            padding:20px;
+            z-index:2000;
+            transition:opacity 1s ease;
         }
 
         .intro-card {
-            max-width: 900px;
-            width: 100%;
-            background: rgba(15, 23, 42, .95);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, .18);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, .7);
-            display: flex;
-            gap: 24px;
-            padding: 24px 22px;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
+            max-width:900px;
+            width:100%;
+            background:rgba(15,23,42,.95);
+            border-radius:24px;
+            border:1px solid rgba(255,255,255,.18);
+            box-shadow:0 20px 60px rgba(0,0,0,.7);
+            display:flex;
+            gap:24px;
+            padding:24px 22px;
+            align-items:center;
+            position:relative;
+            overflow:hidden;
         }
 
-        .intro-card::before {
-            content: "";
-            position: absolute;
-            inset: -40%;
-            background: radial-gradient(circle at 0% 0%, rgba(248, 250, 252, .15), transparent 55%);
-            opacity: .6;
-            pointer-events: none;
+        @media(max-width:768px){
+            .intro-card { flex-direction:column; text-align:center; }
         }
 
-        @media(max-width:768px) {
-            .intro-card {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-
-        .intro-santa {
-            flex: 0 0 260px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-
-        .santa-img {
-            width: 230px;
-            max-width: 70vw;
-            height: auto;
-            animation: floatSanta 3s ease-in-out infinite;
-        }
+        .intro-santa { flex:0 0 260px; display:flex; justify-content:center; align-items:center; position:relative; }
+        .santa-img { width:230px; max-width:70vw; animation:floatSanta 3s ease-in-out infinite; }
 
         @keyframes floatSanta {
-            0% {
-                transform: translateY(0);
-            }
-
-            50% {
-                transform: translateY(-10px);
-            }
-
-            100% {
-                transform: translateY(0);
-            }
+            0%{transform:translateY(0);}
+            50%{transform:translateY(-10px);}
+            100%{transform:translateY(0);}
         }
 
         .speech-bubble {
-            position: absolute;
-            top: 6px;
-            left: 10px;
-            background: white;
-            color: #0f172a;
-            padding: 8px 14px;
-            border-radius: 14px;
-            font-size: .9rem;
-            font-weight: 600;
-            box-shadow: 0 0 10px rgba(255, 255, 255, .8);
-            animation: bubbleIn .5s ease;
-            white-space: nowrap;
+            position:absolute;
+            top:6px; left:10px;
+            background:white;
+            color:#0f172a;
+            padding:8px 14px;
+            border-radius:14px;
+            font-size:.9rem;
+            font-weight:600;
+            animation:bubbleIn .5s ease;
+            white-space:nowrap;
         }
-
         @keyframes bubbleIn {
-            0% {
-                transform: scale(.3);
-                opacity: 0;
-            }
-
-            100% {
-                transform: scale(1);
-                opacity: 1;
-            }
+            0%{transform:scale(.3);opacity:0;}
+            100%{transform:scale(1);opacity:1;}
         }
 
-        /* 🎁 ICON SHAKE (Hiệu ứng rung trái – phải) */
+        /* ICON RUNG 🎁 */
         .shake-icon {
-            display: inline-block;
-            animation: shakeLR 0.7s ease-in-out infinite;
+            display:inline-block;
+            animation:shakeLR .7s ease-in-out infinite;
         }
-
         @keyframes shakeLR {
-            0% {
-                transform: translateX(0);
-            }
-
-            25% {
-                transform: translateX(-4px);
-            }
-
-            50% {
-                transform: translateX(4px);
-            }
-
-            75% {
-                transform: translateX(-4px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
+            0%{transform:translateX(0);}
+            25%{transform:translateX(-4px);}
+            50%{transform:translateX(4px);}
+            75%{transform:translateX(-4px);}
+            100%{transform:translateX(0);}
         }
 
-        .intro-text {
-            flex: 1;
-            position: relative;
-            z-index: 2;
-        }
-
-        .intro-text h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-        }
-
-        .intro-text p {
-            font-size: .98rem;
-            line-height: 1.6;
-            opacity: .95;
-        }
-
-        .intro-text p+p {
-            margin-top: 10px;
-        }
-
-        .intro-buttons {
-            margin-top: 18px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        @media(min-width:768px) {
-            .intro-buttons {
-                max-width: 320px;
-            }
-        }
-
+        .intro-buttons { margin-top:18px; display:flex; flex-direction:column; gap:10px; }
         .select-btn {
-            padding: 10px 22px;
-            border: none;
-            border-radius: 999px;
-            font-weight: 600;
-            cursor: pointer;
-            background: linear-gradient(90deg, #22c55e, #facc15, #fb7185);
-            color: #0f172a;
-            transition: transform .18s ease, box-shadow .18s ease;
+            padding:10px 22px;
+            border:none;
+            border-radius:999px;
+            font-weight:600;
+            cursor:pointer;
+            background:linear-gradient(90deg,#22c55e,#facc15,#fb7185);
+            color:#0f172a;
+            transition:.18s;
         }
+        .select-btn:hover { transform:scale(1.06); }
 
-        .select-btn:hover {
-            transform: scale(1.06);
-            box-shadow: 0 0 18px rgba(250, 204, 21, .7);
-        }
-
-        /* ===== MAIN ===== */
-        header {
-            padding: 20px;
-            text-align: center;
-        }
+        /* ===== MAIN PAGE — GIỮ NGUYÊN ===== */
+        header { padding:20px; text-align:center; }
 
         header h1 {
-            font-size: 2.8rem;
-            text-transform: uppercase;
-            background: linear-gradient(90deg, #ff4b91, #facc15, #22c55e, #38bdf8, #fb7185);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: titleGlow 6s ease infinite;
+            font-size:2.8rem;
+            text-transform:uppercase;
+            background:linear-gradient(90deg,#ff4b91,#facc15,#22c55e,#38bdf8,#fb7185);
+            background-size:400% 400%;
+            -webkit-background-clip:text;
+            -webkit-text-fill-color:transparent;
+            animation:titleGlow 6s ease infinite;
         }
 
         @keyframes titleGlow {
-            0% {
-                background-position: 0 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0 50%;
-            }
+            0%{background-position:0% 50%}
+            50%{background-position:100% 50%}
+            100%{background-position:0% 50%}
         }
 
-        main {
-            padding: 20px;
-            max-width: 1000px;
-            margin: auto;
-        }
-
-        .girls {
-            display: grid;
-            gap: 40px;
-            justify-content: center;
-        }
-
-        .girls.single {
-            grid-template-columns: 1fr;
-            max-width: 450px;
-            margin: auto;
-        }
-
-        @media(min-width:768px) {
-            .girls {
-                grid-template-columns: 1fr 1fr;
-            }
-        }
+        .girls { display:grid; gap:40px; justify-content:center; }
+        @media(min-width:768px){ .girls{grid-template-columns:1fr 1fr;} }
 
         .girl-box {
-            background: rgba(255, 255, 255, .07);
-            border-radius: 18px;
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, .12);
+            background:rgba(255,255,255,.07);
+            border-radius:18px;
+            overflow:hidden;
+            border:1px solid rgba(255,255,255,.12);
         }
 
         .girl-img {
-            width: 100%;
-            height: 420px;
-            object-fit: cover;
-            filter: brightness(.9);
-            transition: .4s;
+            width:100%; height:420px; object-fit:cover;
+            filter:brightness(.9); transition:.4s;
         }
-
-        .girl-img:hover {
-            transform: scale(1.02);
-            filter: brightness(1.05);
-        }
-
+        .girl-img:hover { transform:scale(1.02); filter:brightness(1.05); }
         .girl-text {
-            padding: 16px;
+            padding: 10px;
         }
 
-        footer {
-            text-align: center;
-            padding: 40px 0;
-            opacity: .75;
-            font-size: .9rem;
-        }
+        footer { text-align:center; padding:40px 0; opacity:.75; }
 
-        .hidden {
-            display: none !important;
-        }
+        .hidden { display:none !important; }
 
-        /* SNOW BURST */
+        /* NỔ TUYẾT */
         .snow-burst {
-            position: fixed;
-            width: 14px;
-            height: 14px;
-            background: white;
-            border-radius: 50%;
-            opacity: 0;
-            z-index: 4000;
-            pointer-events: none;
-            animation: burst 1s ease forwards;
+            position:fixed; width:14px; height:14px;
+            background:white;
+            border-radius:50%;
+            opacity:0;
+            z-index:4000;
+            animation:burst 1s ease forwards;
         }
-
         @keyframes burst {
-            0% {
-                opacity: 1;
-                transform: scale(1);
-            }
-
-            80% {
-                opacity: 1;
-            }
-
-            100% {
-                opacity: 0;
-                transform: translate(var(--tx), var(--ty)) scale(.2);
-            }
+            0%{opacity:1; transform:scale(1);}
+            80%{opacity:1;}
+            100%{opacity:0; transform:translate(var(--tx),var(--ty)) scale(.2);}
         }
 
+        /* GARLAND */
         .garland {
-            text-align: center;
-            font-size: 1.4rem;
-            margin-bottom: 10px;
-            animation: sway 2.5s ease-in-out infinite;
-            opacity: .95;
+            text-align:center;
+            font-size:1.4rem;
+            margin-bottom:10px;
+            animation:sway 2.5s ease-in-out infinite;
+            opacity:.95;
         }
-
         @keyframes sway {
-            0% {
-                transform: translateX(0);
-            }
-
-            50% {
-                transform: translateX(6px);
-            }
-
-            100% {
-                transform: translateX(0);
-            }
+            0%{transform:translateX(0);}
+            50%{transform:translateX(6px);}
+            100%{transform:translateX(0);}
         }
+
     </style>
 </head>
 
 <body>
 
-    <!-- ===== MUSIC ===== -->
+    <!-- ==== MUSIC ==== -->
     <audio id="bgmusic" autoplay loop>
-        <source src="audio/nhac-nen-noel-giang-sinh-amp-christmas-179629.mp3" type="audio/mpeg">
+        <source src="audio/nhac-nen-noel-giang-sinh-amp-christmas-179629.mp3">
     </audio>
     <script>
-        document.addEventListener("click", () => bgmusic.play().catch(() => { }), { once: true });
+        document.addEventListener("click",()=>bgmusic.play().catch(()=>{}),{once:true});
     </script>
 
-    <!-- ===== GLOBAL SNOW ===== -->
+    <!-- ==== SNOW ==== -->
     <script>
-        function generateSnow(n) {
-            for (let i = 0; i < n; i++) {
-                const s = document.createElement("div");
-                s.className = "snowflake";
-                s.textContent = ["❄", "✦", "❅", "✧"][Math.floor(Math.random() * 4)];
-                s.style.left = Math.random() * 100 + "vw";
-                s.style.animationDuration = (7 + Math.random() * 7) + "s";
-                s.style.animationDelay = Math.random() * 5 + "s";
+        function generateSnow(n){
+            for(let i=0;i<n;i++){
+                const s=document.createElement("div");
+                s.className="snowflake";
+                s.textContent=["❄","✦","❅","✧"][Math.floor(Math.random()*4)];
+                s.style.left=Math.random()*100+"vw";
+                s.style.animationDuration=(7+Math.random()*7)+"s";
+                s.style.animationDelay=Math.random()*5+"s";
                 document.body.appendChild(s);
             }
         }
-        function generateTrees(n) {
-            for (let i = 0; i < n; i++) {
-                const t = document.createElement("div");
-                t.className = "treeflake";
-                t.textContent = "🎄";
-                t.style.left = Math.random() * 100 + "vw";
-                t.style.animationDuration = (9 + Math.random() * 7) + "s";
-                t.style.animationDelay = Math.random() * 5 + "s";
+        function generateTrees(n){
+            for(let i=0;i<n;i++){
+                const t=document.createElement("div");
+                t.className="treeflake";
+                t.textContent="🎄";
+                t.style.left=Math.random()*100+"vw";
+                t.style.animationDuration=(9+Math.random()*7)+"s";
+                t.style.animationDelay=Math.random()*5+"s";
                 document.body.appendChild(t);
             }
         }
@@ -420,7 +244,8 @@
         generateTrees(15);
     </script>
 
-    <!-- ===== INTRO SANTA ===== -->
+
+    <!-- ===== INTRO ===== -->
     <div id="intro-wrapper">
         <div class="intro-card">
 
@@ -430,16 +255,17 @@
             </div>
 
             <div class="intro-text">
-                <h2>Ông Trùm IT gửi lời chúc Giáng Sinh đến hai em
+                <h2>
+                    Ông Trùm IT gửi lời chúc Giáng Sinh đến hai em
                     <span class="shake-icon">🎁</span>
                 </h2>
 
                 <p>Noel đến rồi, anh chúc hai em có một mùa Giáng Sinh thật bình yên và ngập tràn niềm vui.
                     Cảm ơn hai em đã luôn đáng yêu và là nguồn năng lượng tích cực của anh.</p>
 
-                <p>Chúc hai em luôn xinh đẹp, mạnh khỏe, công việc thuận lợi —
-                    và giữ nụ cười rực rỡ như ánh đèn Noel ✨
-                </p>
+                <p>Chúc hai em luôn xinh đẹp, mạnh khỏe, công việc thuận lợi — và giữ nụ cười
+                    rực rỡ như ánh đèn Noel ✨</p>
+
                 <p>Mong rằng mùa lễ này hai em sẽ nhận được thật nhiều yêu thương ❤️</p>
 
                 <div class="intro-buttons">
@@ -451,78 +277,90 @@
         </div>
     </div>
 
-    <!-- ===== PAGE MAIN ===== -->
-    <header>
-        <div class="garland">✨ 🎄 🛎️ 🎁 🌟 🎅 🌲 🧦 ✨</div>
-        <h1>Merry Christmas <br>🎄🎄🎄</h1>
-    </header>
 
-    <main>
-        <div class="girls" id="girls">
+    <!-- 🌟🌟 MAIN CONTENT — GIỮ NGUYÊN TOÀN BỘ STYLE 🌟🌟 -->
+    <div id="main-wrapper">
 
-            <div class="girl-box" id="girl1">
-                <img class="girl-img" src="images/girl_hoc_code.jpg">
-                <div class="girl-text">
-                    <h3>🎀 Gơn học code</h3>
-                    <p>Chúc em một mùa Noel thật ấm áp và nhẹ nhàng.
-                        Mong mọi điều tốt đẹp nhất sẽ đến với em. 💖</p>
+        <header>
+            <div class="garland">✨ 🎄 🛎️ 🎁 🌟 🎅 🌲 🧦 ✨</div>
+            <h1>Merry Christmas <br>🎄🎄🎄</h1>
+        </header>
+
+        <main>
+            <div class="girls" id="girls">
+
+                <div class="girl-box" id="girl1">
+                    <img class="girl-img" src="images/girl_hoc_code.jpg">
+                    <div class="girl-text">
+                        <h3>🎀 Gơn học code</h3>
+                        <p>Chúc em một mùa Noel thật ấm áp và nhẹ nhàng.
+                            Mong mọi điều tốt đẹp nhất sẽ đến với em. 💖</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="girl-box" id="girl2">
-                <img class="girl-img" src="images/girl_vo_tri.jpg">
-                <div class="girl-text">
-                    <h3>🎀 Gơn vô tri</h3>
-                    <p>Chúc em một Giáng Sinh lung linh, thật nhiều niềm vui và may mắn. ✨
-                        Hãy luôn giữ nụ cười thật xinh nhé. 💜</p>
+                <div class="girl-box" id="girl2">
+                    <img class="girl-img" src="images/girl_vo_tri.jpg">
+                    <div class="girl-text">
+                        <h3>🎀 Gơn vô tri</h3>
+                        <p>Chúc em một Giáng Sinh lung linh, thật nhiều niềm vui và may mắn. ✨
+                            Hãy luôn giữ nụ cười thật xinh nhé. 💜</p>
+                    </div>
                 </div>
+
             </div>
+        </main>
 
-        </div>
-    </main>
+        <footer>Made with 'Ông Trùm IT' for you this Christmas 🎄</footer>
+    </div>
 
-    <footer>Made with 'Ông Trùm IT' for you this Christmas 🎄</footer>
 
     <!-- ===== LOGIC ===== -->
     <script>
         const intro = document.getElementById("intro-wrapper");
+        const mainWrapper = document.getElementById("main-wrapper");
         const girls = document.getElementById("girls");
-        const viewGirl1 = document.getElementById("view-girl1");
-        const viewGirl2 = document.getElementById("view-girl2");
 
-        function snowBurst(x, y) {
-            for (let i = 0; i < 50; i++) {
-                const p = document.createElement("div");
-                p.className = "snow-burst";
-                const ang = Math.random() * 2 * Math.PI;
-                const d = 100 + Math.random() * 120;
-                p.style.setProperty("--tx", Math.cos(ang) * d + "px");
-                p.style.setProperty("--ty", Math.sin(ang) * d + "px");
-                p.style.left = x + "px";
-                p.style.top = y + "px";
+        const btn1 = document.getElementById("view-girl1");
+        const btn2 = document.getElementById("view-girl2");
+
+        function snowBurst(x,y){
+            for(let i=0;i<50;i++){
+                const p=document.createElement("div");
+                p.className="snow-burst";
+                const ang=Math.random()*Math.PI*2;
+                const d=100+Math.random()*120;
+                p.style.setProperty("--tx",Math.cos(ang)*d+"px");
+                p.style.setProperty("--ty",Math.sin(ang)*d+"px");
+                p.style.left=x+"px";
+                p.style.top=y+"px";
                 document.body.appendChild(p);
-                setTimeout(() => p.remove(), 1000);
+                setTimeout(()=>p.remove(),1000);
             }
         }
 
-        function choose(btn, showId, hideId) {
-            const rect = btn.getBoundingClientRect();
-            snowBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        function choose(btn, showId, hideId){
+            const rect=btn.getBoundingClientRect();
+            snowBurst(rect.left+rect.width/2, rect.top+rect.height/2);
 
             document.getElementById(showId).classList.remove("hidden");
             document.getElementById(hideId).classList.add("hidden");
             girls.classList.add("single");
 
-            setTimeout(() => {
-                intro.style.opacity = "0";
-                setTimeout(() => intro.style.display = "none", 900);
-            }, 600);
+            // Ẩn intro → Hiện main
+            setTimeout(()=>{
+                intro.style.opacity="0";
+
+                setTimeout(()=>{
+                    intro.style.display="none";
+                    mainWrapper.classList.add("show");
+                },900);
+
+            },600);
         }
 
-        viewGirl1.onclick = () => choose(viewGirl1, "girl1", "girl2");
-        viewGirl2.onclick = () => choose(viewGirl2, "girl2", "girl1");
+        btn1.onclick = ()=> choose(btn1,"girl1","girl2");
+        btn2.onclick = ()=> choose(btn2,"girl2","girl1");
     </script>
 
 </body>
-
 </html>
